@@ -1,0 +1,260 @@
+﻿@model int
+@{
+	string backgroundImagePath = "";
+	if (Model != 1)
+		backgroundImagePath = "/media/image/soru(@ViewBag.CurrentQuestionIndex)_blue.jpg";
+	else backgroundImagePath = "/media/image/soru(@ViewBag.CurrentQuestionIndex)_red.jpg";
+}
+
+<!doctype html>
+<html lang="en" class="remember-theme">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>Quiz</title>
+	<meta name="description" content="OneUI - Bootstrap 5 Admin Template &amp; UI Framework created by pixelcave">
+	<meta name="author" content="pixelcave">
+	<meta name="robots" content="index, follow">
+	<link rel="stylesheet" id="css-main" href="~/css/oneui.min.css">
+	<style>
+		.bg-image {
+			
+			background-size: 150%;
+			background-position: center;
+			background-repeat: no-repeat;
+			width: 150vw;
+			height: 150vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.quiz-container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 10px;
+			background-color: transparent;
+			border-radius: 10px;
+
+			margin-top: 50px;
+		}
+
+
+		.question-text {
+			font-size: 2.5rem;
+			margin-bottom: 20px;
+			font-weight: 600;
+			align-items: center;
+		}
+
+		.form-check {
+			margin-bottom: 15px;
+		}
+
+		.option-btn {
+			display: block;
+			width: 100%;
+			padding: 15px;
+			margin: 10px 0;
+			background-color: transparent;
+			border: none;
+			border-radius: 10px;
+			font-size: 1.8rem;
+			text-align: center;
+			cursor: pointer;
+			color: white;
+			transition: all 0.3s ease;
+		}
+
+			.option-btn:hover {
+				background-color: transparent;
+			}
+
+			.option-btn.selected {
+				background-color: transparent;
+				color: white;
+			}
+
+		.correct {
+			color: green;
+			font-weight: bold;
+		}
+
+		.incorrect {
+			color: red;
+			font-weight: bold;
+		}
+
+		.submit-button {
+			text-align: center;
+			margin-top: 20px;
+		}
+
+
+			.btn-primary:hover {
+				background-color: #2e59d9;
+			}
+
+
+		.options-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center; /* Yatayda ortala */
+
+		}
+
+		.options-row {
+			display: flex;
+			justify-content: center; /* İçerikleri yatayda ortala */
+			margin-bottom: 80px; /* Satırlar arası boşluk */
+			gap:150px;
+		}
+
+			.options-row:last-child {
+				margin-bottom: 0; /* Son satırın alt boşluğunu kaldır */
+			}
+
+		.form-check {
+			margin: 0 30px; /* Seçenekler arası boşluk */
+		}
+
+		.option-btn {
+			/* Mevcut stil kodlarınız buraya */
+			padding: 5px 150px; /* Buton boyutunu ayarlayın */
+			text-decoration-color: white;
+			background-color: transparent;
+
+		}
+
+		.container-alt-alta {
+			display: flex;
+			flex-direction: column;
+			gap: 175px; /* İki div arasında 10px boşluk bırakır */
+			justify-content: center;
+		}
+
+		.video-player {
+			width: 100%;
+			height: 100vh; /* Ekranı tam kaplasın */
+			object-fit: cover; /* Video'nun görüntü oranını bozmadan ekranı kaplamasını sağlar */
+			display: block;
+			margin-top: 20px; /* Sorudan sonra video arası boşluk */
+		}
+
+	</style>
+	<!-- Doğru Cevap Videosu -->
+
+
+</head>
+<body>
+	<canvas id="confetti-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></canvas>
+	<div id="page-container">
+		<main id="main-container">
+			<div class="bg-image" style="background-image: url(@backgroundImagePath);">
+				<div class="container-alt-alta">
+					<div class="quiz-container ">
+						<div id="timer-container" style="position: absolute; top: 50px; right: 180px; font-size: 24px; color: white; font-weight: bold;">
+							<span id="timer">20</span> sn
+						</div>
+						<h4 class="h3 fw-bold text-white mb-2">
+							@ViewBag.CurrentQuestion.QuestionText
+						</h4>
+
+					</div>
+					<div class="justify-content-center">
+						<div class="options-container">
+							<form method="post" action="/Quiz/AnswerQuestion" class="question-form">
+								<div class="options-row">
+									<div class="form-check">
+										<button type="button" class="option-btn fw-bold" id="option0" data-index="0">
+											@ViewBag.CurrentQuestion.Options[0]
+										</button>
+									</div>
+									<div class="form-check">
+										<button type="button" class="option-btn fw-bold" id="option1" data-index="1">
+											@ViewBag.CurrentQuestion.Options[1]
+										</button>
+									</div>
+								</div>
+								<div class="options-row">
+									<div class="form-check">
+										<button type="button" class="option-btn fw-bold " id="option2" data-index="2">
+											@ViewBag.CurrentQuestion.Options[2]
+										</button>
+									</div>
+									<div class="form-check">
+										<button type="button" class="option-btn fw-bold" id="option3" data-index="3">
+											@ViewBag.CurrentQuestion.Options[3]
+
+										</button>
+									</div>
+								</div>
+								<input type="hidden" id="selectedOption" name="selectedOption" value="-1" />
+
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+
+		</main>
+	</div>
+
+	<script src="~/js/oneui.app.min.js"></script>
+	<script src="~/js/jquery.min.js"></script>
+	<script>
+				$(document).ready(function () {
+			$(".option-btn").click(function () {
+				var selectedOption = $(this).data("index"); // Seçilen seçeneğin index değeri
+				var correctAnswerIndex = @ViewBag.CurrentQuestion.CorrectAnswerIndex; // Doğru cevap index'i
+
+				// Seçeneği işaretliyoruz
+				$(".option-btn").prop("disabled", true); // Butonları devre dışı bırak
+
+				// Butonun rengini değiştireceğiz ve işaretleyeceğiz
+				if (selectedOption === correctAnswerIndex) {
+					$(this).addClass("correct").append(" ✓"); // Yeşil tik ekleyip butonu işaretle
+				} else {
+					$(this).addClass("incorrect").append(" ✘"); // Kırmızı çarpı ekleyip butonu işaretle
+				}
+				console.log("test");
+				//clearInterval(timerInterval); // Kullanıcı yanıt verdiğinde geri sayımı durdur
+				// Cevap sonucu doğruysa 2 saniye sonra skoru güncelle
+				setTimeout(function () {
+					// Skoru güncellemek için backend'e POST isteği gönder
+					$("input#selectedOption").val(selectedOption);
+					$("form.question-form").submit();  // Formu gönder
+				}, 2000); // 2 saniye bekle
+			});
+		});
+
+
+		let timeLeft = 20;  // Geri sayım süresi
+		let timerElement = document.getElementById("timer");
+
+		function updateTimer() {
+			if (timeLeft > 0) {
+				timeLeft--;
+				timerElement.textContent = timeLeft;
+			} else {
+				clearInterval(timerInterval);
+
+				autoSubmit(); // Süre bitince otomatik geçiş fonksiyonunu çağır
+			}
+		}
+
+		let timerInterval = setInterval(updateTimer, 1000); // Her saniye updateTimer çalıştır
+
+		function autoSubmit() {
+			// Formu otomatik olarak göndererek yeni soruya geç
+			$("form.question-form").submit();
+		}
+	</script>
+
+
+
+</body>
+</html>

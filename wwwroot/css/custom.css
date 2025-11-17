@@ -1,0 +1,173 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.bg-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quiz-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: transparent;
+    border-radius: 10px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+
+.question-text {
+    font-size: 2.0rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+    align-items: center;
+}
+
+.form-check {
+    margin-bottom: 15px;
+}
+
+.option-btn {
+    display: block;
+    width: 100%;
+    padding: 0px;
+    margin: 0px 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    text-align: left;
+    cursor: pointer;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+    .option-btn:hover {
+        background-color: transparent;
+    }
+
+    .option-btn.selected {
+        background-color: transparent;
+        color: white;
+    }
+
+.correct {
+    color: green;
+    font-weight: bold;
+}
+
+.incorrect {
+    color: red;
+    font-weight: bold;
+}
+
+.submit-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+.btn-primary:hover {
+    background-color: #2e59d9;
+}
+
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18.75px; /* Daha düzgün hizalama */
+    margin-top: 75px; /* Buton grubunu biraz daha aşağıya kaydır */
+}
+
+.options-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 23px; /* Butonlar arası boşluk */
+    width: 100%; /* Satırın genişliğini butonlara uydur */
+}
+
+    .options-row:first-child {
+        margin-top: 72.5px; /* Birinci sıradaki butonları daha aşağıya kaydır */
+        margin-left: -1.1px;
+    }
+
+    .options-row:nth-child(2) {
+        margin-top: 14.8px; /* İkinci sıradaki butonları daha aşağıya kaydır */
+    }
+
+.form-check {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.option-btn {
+    flex-grow: 1; /* Her butonun eşit şekilde büyümesini sağlar */
+    min-width: 656.75px; /* Buton genişliği */
+    min-height: 146.5px; /* Buton yüksekliği */
+    padding: 6px 16px;
+    font-size: 1.2rem;
+    text-align: center;
+    cursor: pointer;
+    margin-left: -23px;
+    border-radius: 35px; /* Kenarları yuvarlatma */
+}
+
+    .option-btn:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .option-btn:active {
+        transform: scale(0.95);
+    }
+
+
+
+
+.correct {
+    background-color: transparent; /* Transparan yeşil */
+    color: white;
+    font-weight: bold;
+    border: 23px solid #FFFFFF; /* Çerçeve kalınlığı, tipi ve rengi */
+}
+
+.incorrect {
+    background-color: transparent; /* Transparan kırmızı */
+    color: white;
+    font-weight: bold;
+    border: 23px solid #FFFFFF; /* Çerçeve kalınlığı, tipi ve rengi */
+}
+
+.container-alt-alta {
+    text-align: center;
+}
+
+#timer-container {
+    position: absolute;
+    top: 28.5%; /* Arka plan yüksekliğinin %20'si kadar yukarıdan */
+    left: 88%; /* Arka plan genişliğinin %70'i kadar soldan */
+    font-size: 2vw; /* Ekrana göre dinamik boyutlandırma */
+    color: white;
+    font-weight: bold;
+    font-size: 1.8rem;
+    z-index: 10; /* Diğer öğelerin arkasında kalmaması için */
+    text-align: center;
+    transform: translate(-50%, -50%); /* ortalamaya yardımcı */
+    width: 80px; /* veya 100px; sabit genişlik */
+}
+
+#timer {
+    text-align: center;
+}

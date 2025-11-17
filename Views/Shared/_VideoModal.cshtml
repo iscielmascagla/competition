@@ -1,0 +1,79 @@
+﻿@* Video Modal - Partial View *@
+<div class="modal fade custom-video-modal" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat" style="display: none;"></button>
+                <video preload="auto" id="videoPlayer" width="100%">
+                    <source id="videoSource" src="" type="video/mp4">
+                    Tarayıcınız video etiketini desteklemiyor.
+                </video>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .custom-video-modal .modal-content {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+    }
+
+    .custom-video-modal .modal-body {
+        position: relative;
+        padding: 0; /* boşluk olmasın */
+    }
+
+    .custom-video-modal .btn-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 2;
+        background-color: rgba(0,0,0,0.9) !important; /* yarı saydam arka plan */
+        border-radius: 50%;
+    }
+
+    .custom-video-modal .btn-close {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .custom-video-modal .modal-body:hover .btn-close {
+        opacity: 1;
+    }
+
+    .modal-backdrop.show {
+        background-color: rgba(0, 0, 0, 0.99) !important; /* daha fazla karanlık */
+    }
+
+    .modal-backdrop.video-backdrop-dark {
+        background-color: rgba(0, 0, 0, 0.99) !important; /* sadece video modal için koyu */
+    }
+</style>
+
+<script>
+    const videoModal = document.getElementById('videoModal');
+
+    videoModal.addEventListener('shown.bs.modal', function () {
+        const backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) {
+            backdrop.classList.add('video-backdrop-dark');
+        }
+    });
+
+    videoModal.addEventListener('hidden.bs.modal', function () {
+        const backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) {
+            backdrop.classList.remove('video-backdrop-dark');
+        }
+    });
+
+    // "x" tuşuna basıldığında modal'ı kapatma işlemi
+    document.addEventListener('keydown', function (event) {
+        if (event.key === "x" || event.key === "X") {  // "x" veya "X" tuşu
+            const modalInstance = bootstrap.Modal.getInstance(videoModal);
+            modalInstance.hide();  // Modal'ı kapat
+        }
+    });
+</script>
